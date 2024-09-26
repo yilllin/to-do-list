@@ -4,6 +4,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import IconButton from '@mui/material/IconButton';
 
 function Item({ item, setTodos}) {
+  // edit
   const [editing, setEditing] = React.useState(false);
   const inputRef = React.useRef(null);
   const handleEdit = () => {
@@ -33,6 +34,11 @@ function Item({ item, setTodos}) {
       )
     );
   };
+
+  // delete
+  const handleDelete = () => {
+    setTodos((prevTodos) => prevTodos.filter((todo) => todo.id !== item.id));
+  };
   
   return (
     <li id={item?.id} className="todo_item">
@@ -60,7 +66,7 @@ function Item({ item, setTodos}) {
                 <EditNoteIcon onClick={handleEdit} />
               </IconButton>
               <IconButton>
-                <DeleteIcon />
+                <DeleteIcon onClick={handleDelete} />
               </IconButton>
             </div>
         </div>
