@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import * as React from 'react';
 import ToDoForm from './ToDoForm';
 import ToDoList from './ToDoList';
 
 
 function ToDo() {
-    const [todos, setTodos] = useState([]);
+    const [todos, setTodos] = React.useState([]);
     return (
         <div>
             <ToDoForm setTodos={setTodos}/>
