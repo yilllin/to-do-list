@@ -4,7 +4,6 @@ import ToDoList from './ToDoList';
 
 
 function ToDo() {
-    // const [todos, setTodos] = React.useState([]);
     const [todos, setTodos] = useState([]);
     return (
         <div>
