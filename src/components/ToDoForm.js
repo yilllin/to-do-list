@@ -34,10 +34,10 @@ function ToDoForm({ todos, setTodos }) {
           }}
         >
           <Grid item size={8}>
-            <TextField id="todo" label="Task" variant="outlined" />
+            <TextField id="todo" name="todo" label="Task" variant="outlined" />
           </Grid>
           <Grid item size={4}>
-            <Button variant="text"> Add </Button>
+            <Button variant="text" type="submit"> Add </Button>
           </Grid>
         </Grid>
       </Box>

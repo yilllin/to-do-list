@@ -58,7 +58,7 @@ function DemoPageContent({ pathname }) {
       {/* <Typography>Dashboard content for {pathname}</Typography> */}
       
       <Typography>
-        <p>Dashboard content for {pathname} v0927 0222</p>
+        <p>Dashboard content for {pathname} v0929 0502</p>
       </Typography>
       {pathname.startsWith('/map') ? (
         <Map />

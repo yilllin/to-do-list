@@ -27,8 +27,8 @@ function Item({ item, todos, setTodos}) {
       );
     }
   }, [editing]);
-  const handleInpuSubmit = (event) => {
-    event.preventDefault();
+  const handleInpuSubmit = (e) => {
+    e.preventDefault();
     const updatedTodos = JSON.stringify(todos);
     localStorage.setItem("todos", updatedTodos);
     setEditing(false);
@@ -64,7 +64,7 @@ function Item({ item, todos, setTodos}) {
         <Box
           component="form"
           sx={{ 
-            '& > :not(style)': { m: 1, width: '52ch' } ,
+            '& > :not(style)': { m: 1, width: '48ch' } ,
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
@@ -104,7 +104,7 @@ function Item({ item, todos, setTodos}) {
       ) : (
         <Box
           sx={{ 
-            '& > :not(style)': { m: 1, width: '52ch' } ,
+            '& > :not(style)': { m: 1, width: '48ch' } ,
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
