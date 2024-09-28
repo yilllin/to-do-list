@@ -10,7 +10,7 @@ function ToDoForm({ todos, setTodos }) {
       const value = e.target.todo.value;
       const newTodo = {
         title: value,
-        id: Date.now(),
+        id: window.crypto.randomUUID(),
       };
       setTodos((prevTodos) => [ ...prevTodos, newTodo ]);
       const updatedTodoList = JSON.stringify([...todos, newTodo]);
