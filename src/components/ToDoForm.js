@@ -4,14 +4,17 @@ import Grid from '@mui/material/Grid2';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 
-function ToDoForm({ setTodos }) {
+function ToDoForm({ todos, setTodos }) {
     const submit = e => {
       e.preventDefault();
       const value = e.target.todo.value;
-      setTodos((prevTodos) => [
-        ...prevTodos,
-        { title: value, id: Date.now() },
-      ]);
+      const newTodo = {
+        title: value,
+        id: Date.now(),
+      };
+      setTodos((prevTodos) => [ ...prevTodos, newTodo ]);
+      const updatedTodoList = JSON.stringify([...todos, newTodo]);
+      localStorage.setItem("todos", updatedTodoList);
       e.target.reset();
     };
     return (

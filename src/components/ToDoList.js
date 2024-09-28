@@ -11,7 +11,7 @@ import EditNoteIcon from '@mui/icons-material/EditNote';
 import DeleteIcon from '@mui/icons-material/Delete';
 import DoneIcon from '@mui/icons-material/Done';
 
-function Item({ item, setTodos}) {
+function Item({ item, todos, setTodos}) {
   // edit
   const [editing, setEditing] = React.useState(false);
   const inputRef = React.useRef(null);
@@ -29,9 +29,13 @@ function Item({ item, setTodos}) {
   }, [editing]);
   const handleInpuSubmit = (event) => {
     event.preventDefault();
+    const updatedTodos = JSON.stringify(todos);
+    localStorage.setItem("todos", updatedTodos);
     setEditing(false);
   };
   const handleInputBlur = () => {
+    const updatedTodos = JSON.stringify(todos);
+    localStorage.setItem("todos", updatedTodos);
     setEditing(false);
   };
   const handleInputChange = (e) => {
@@ -47,6 +51,10 @@ function Item({ item, setTodos}) {
     var confirm = window.confirm('確認刪除?');
     if(confirm){
       setTodos((prevTodos) => prevTodos.filter((todo) => todo.id !== item.id));
+      const updatedTodos = JSON.stringify(
+        todos.filter((todo) => todo.id !== item.id)
+      );
+      localStorage.setItem("todos", updatedTodos);
     }
   };
   
@@ -144,7 +152,7 @@ function ToDoList({ todos, setTodos }) {
     <List className="todo_list">
       {todos && todos.length > 0 ? (
         todos?.map((item, index) => 
-        <Item key={index} item={item} setTodos={setTodos}/>
+        <Item key={index} item={item} todos={todos} setTodos={setTodos}/>
       )) : (
         <Typography sx={{ mt: 2, mb: 2 }} variant="p" component="div">
           Empty
