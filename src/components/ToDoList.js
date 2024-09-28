@@ -1,7 +1,15 @@
 import * as React from 'react';
+import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid2';
+import { List,ListItem,ListItemIcon } from '@mui/material';
+import TextField from '@mui/material/TextField';
+import Typography from '@mui/material/Typography';
+import Tooltip from '@mui/material/Tooltip';
+import IconButton from '@mui/material/IconButton';
+import TaskAltIcon from '@mui/icons-material/TaskAlt';
 import EditNoteIcon from '@mui/icons-material/EditNote';
 import DeleteIcon from '@mui/icons-material/Delete';
-import IconButton from '@mui/material/IconButton';
+import DoneIcon from '@mui/icons-material/Done';
 
 function Item({ item, setTodos}) {
   // edit
@@ -13,7 +21,6 @@ function Item({ item, setTodos}) {
   React.useEffect(() => {
     if (editing && inputRef.current) {
       inputRef.current.focus();
-      // position the cursor at the end of the text
       inputRef.current.setSelectionRange(
         inputRef.current.value.length,
         inputRef.current.value.length
@@ -37,54 +44,113 @@ function Item({ item, setTodos}) {
 
   // delete
   const handleDelete = () => {
-    setTodos((prevTodos) => prevTodos.filter((todo) => todo.id !== item.id));
+    var confirm = window.confirm('確認刪除?');
+    if(confirm){
+      setTodos((prevTodos) => prevTodos.filter((todo) => todo.id !== item.id));
+    }
   };
   
   return (
-    <li id={item?.id} className="todo_item">
+    <ListItem key={item.id} sx={{ display: 'list-item' }}>
       {editing ? (
-        <form className="edit-form" onSubmit={handleInpuSubmit}>
-          <label htmlFor="edit-todo">
-            <input
-              ref={inputRef}
-              type="text"
-              name="edit-todo"
-              id="edit-todo"
-              defaultValue={item?.title}
-              onBlur={handleInputBlur}
-              onChange={handleInputChange}
-            />
-          </label>
-        </form>
+        <Box
+          component="form"
+          sx={{ 
+            '& > :not(style)': { m: 1, width: '52ch' } ,
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+          noValidate
+          autoComplete="off"
+          onSubmit={handleInpuSubmit}
+        >
+          <Grid container spacing={1}>
+            <Grid item size={2}>
+              <ListItemIcon>
+                <TaskAltIcon />
+              </ListItemIcon>
+            </Grid>
+            <Grid item size={6}>
+              <TextField
+                inputRef={inputRef}
+                type="text"
+                name="edit-todo"
+                id="edit-todo"
+                defaultValue={item?.title}
+                onBlur={handleInputBlur}
+                onChange={handleInputChange}
+                label="Edit Task"
+                variant="outlined"
+                size="small"
+                fullWidth
+              />
+            </Grid>
+            <Grid item size="auto">
+              <IconButton onClick={handleInputChange}>
+                <DoneIcon />
+              </IconButton>
+            </Grid>
+          </Grid>
+        </Box>
       ) : (
-        <div>
-            <button className="todo_items_left">
-              <p>{item?.title}</p>
-            </button>
-            <div className="todo_items_right">
-              <IconButton>
-                <EditNoteIcon onClick={handleEdit} />
-              </IconButton>
-              <IconButton>
-                <DeleteIcon onClick={handleDelete} />
-              </IconButton>
-            </div>
-        </div>
+        <Box
+          sx={{ 
+            '& > :not(style)': { m: 1, width: '52ch' } ,
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          <Grid 
+            container 
+            spacing={1}
+            sx={{
+              justifyContent: "flex-start",
+              alignItems: "center",
+            }}
+          >
+            <Grid item size={2}>
+              <ListItemIcon>
+                <TaskAltIcon />
+              </ListItemIcon>
+            </Grid>
+            <Grid item size={6}>
+              <Typography sx={{ mt: 2, mb: 2 }} variant="p" component="div">
+                {item?.title}
+              </Typography>
+            </Grid>
+            <Grid item size="auto">
+              <Tooltip title="Edit">
+                <IconButton onClick={handleEdit}>
+                  <EditNoteIcon />
+                </IconButton>
+              </Tooltip>
+              <Tooltip title="Delete">
+                <IconButton onClick={handleDelete}>
+                  <DeleteIcon />
+                </IconButton>
+              </Tooltip>
+            </Grid>
+          </Grid>
+        </Box>
       )}
-    </li>
+    </ListItem>
   );
 }
 
 function ToDoList({ todos, setTodos }) {
   return (
-    <ol className="todo_list">
+    <List className="todo_list">
       {todos && todos.length > 0 ? (
         todos?.map((item, index) => 
         <Item key={index} item={item} setTodos={setTodos}/>
       )) : (
-        <p>Empty</p>
+        <Typography sx={{ mt: 2, mb: 2 }} variant="p" component="div">
+          Empty
+        </Typography>
       )}
-    </ol>
+    </List>
   );
 }
 export default ToDoList;
