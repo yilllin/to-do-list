@@ -10,6 +10,7 @@ import TaskAltIcon from '@mui/icons-material/TaskAlt';
 import EditNoteIcon from '@mui/icons-material/EditNote';
 import DeleteIcon from '@mui/icons-material/Delete';
 import DoneIcon from '@mui/icons-material/Done';
+import dayjs from 'dayjs';
 
 function Item({ item, todos, setTodos}) {
   // edit
@@ -57,14 +58,16 @@ function Item({ item, todos, setTodos}) {
       localStorage.setItem("todos", updatedTodos);
     }
   };
-  
+
+  const formattedDatetime = item?.datetime ? dayjs(item.datetime).format('YYYY-MM-DD HH:mm:ss') : 'No Date';
+
   return (
     <ListItem key={item.id} sx={{ display: 'list-item' }}>
       {editing ? (
         <Box
           component="form"
           sx={{ 
-            '& > :not(style)': { m: 1, width: '48ch' } ,
+            '& > :not(style)': { m: 1, width: '36ch' } ,
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
@@ -104,7 +107,7 @@ function Item({ item, todos, setTodos}) {
       ) : (
         <Box
           sx={{ 
-            '& > :not(style)': { m: 1, width: '48ch' } ,
+            '& > :not(style)': { m: 1, width: '36ch' } ,
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
@@ -124,9 +127,13 @@ function Item({ item, todos, setTodos}) {
               </ListItemIcon>
             </Grid>
             <Grid item size={6}>
-              <Typography sx={{ mt: 2, mb: 2 }} variant="p" component="div">
+              <Typography sx={{ mt: 2, mb: 2 }} variant="body1">
                 {item?.title}
               </Typography>
+              <Typography sx={{ mt: 2, mb: 2 }} variant="caption">
+                {formattedDatetime}
+              </Typography>
+              
             </Grid>
             <Grid item size="auto">
               <Tooltip title="Edit">
@@ -154,7 +161,7 @@ function ToDoList({ todos, setTodos }) {
         todos?.map((item, index) => 
         <Item key={index} item={item} todos={todos} setTodos={setTodos}/>
       )) : (
-        <Typography sx={{ mt: 2, mb: 2 }} variant="p" component="div">
+        <Typography sx={{ mt: 2, mb: 2 }} variant="body1">
           Empty
         </Typography>
       )}
